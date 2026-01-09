@@ -50,6 +50,8 @@ object FlywheelSubsystem : SubsystemBase() {
     init {
         defaultCommand = holdCommand(::topLastSetpoint, ::bottomLastSetpoint)
 
+        // Remember, things are grey when they can be deleted without errors.
+        // If there's a lot of grey on a line like this, it means those parts can be deleted
         org.sert2521.marvin2026.subsystems.flywheel.FlywheelSubsystem.topSMC.setupTelemetry(
             NetworkTableInstance.getDefault().getTable("Tuning")
                 .getSubTable("Flywheels"),
