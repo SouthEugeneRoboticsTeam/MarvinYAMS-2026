@@ -1,5 +1,6 @@
 package org.sert2521.marvin2026
 
+import edu.wpi.first.units.Units.RPM
 import yams.gearing.GearBox
 import yams.gearing.MechanismGearing
 
@@ -21,4 +22,6 @@ object FlywheelsConstants {
             1.0
         )
     )
+
+    val ShootTarget = RPM.of(0.0)
 }
