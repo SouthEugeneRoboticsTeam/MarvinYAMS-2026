@@ -1,0 +1,25 @@
+    Big thing I realized is that in order to use telemetry easily for motors, you just have
+to use the MechanismTelemetry class. You put in the subsystem name and the motor, for each motor.
+e.g:
+
+object ExampleSubsystem : SubsystemBase() {
+    ...
+
+    // This can be anywhere before the init{} block
+    private val telemetry = MechanismTelemetry()
+
+    ...
+
+    init {
+        telemetry.setupTelemetry("SubsystemName", motorOneSMC)
+        telemetry.setupTelemetry("SubsystemName", motorTwoSMC)
+    }
+
+    ...
+
+}
+
+
+    This would be a REPLACEMENT for the telemetry stuff that's already in the FlywheelSubsystem init{}
+block (excluding the default command). The same method can be used for the indexer and the intake when
+those subsystems start being programmed (use this for anything WITHOUT a smart mechanism).
