@@ -3,7 +3,6 @@ package org.sert2521.marvin2026.subsystems.indexer
 import com.revrobotics.spark.SparkLowLevel
 import com.revrobotics.spark.SparkMax
 import edu.wpi.first.math.system.plant.DCMotor
-import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.units.Units.Amps
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj2.command.Command
@@ -33,14 +32,7 @@ object IndexerSubsystem : SubsystemBase() {
     private val telemetry = MechanismTelemetry()
 
     init {
-        defaultCommand = default()
-
-        indexerSMC.setupTelemetry(
-            NetworkTableInstance.getDefault().getTable("Tuning")
-                .getSubTable("Indexer"),
-            NetworkTableInstance.getDefault().getTable("Mechanisms")
-                .getSubTable("Indexer")
-        )
+        telemetry.setupTelemetry("SubsystemName", indexerSMC)
     }
 
     override fun periodic() {
@@ -58,9 +50,9 @@ object IndexerSubsystem : SubsystemBase() {
     fun index(): Command {
         return runOnce {
             setIndexerMotor(IndexerConstants.INDEXING)
-        }.until(
-            indexerBeambreak.get == true
-        )
+        }.until {
+            indexerBeambreak.get()
+        }
     }
 
     fun reverse():Command {
